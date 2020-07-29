@@ -1,0 +1,67 @@
+#!/bin/sh
+
+# cd to home because it works easier and shows better output with status
+cd $HOME
+
+# get the dots repo location
+dots_repo="${DOTS_REPO:-${XDG_DATA_HOME:-$HOME/.local/share}/dots}"
+
+# init the bare repo where it should be if it doesn't exist
+[ ! -d "$dots_repo" ] && git init --bare "$dots_repo"
+
+# this is used kinda like an alias throughout the script
+dots="git --git-dir=$dots_repo --work-tree=$HOME"
+
+# initialize cache stuff
+cache_dir="${DOTS_CACHEDIR:-${XDG_CACHE_HOME:-$HOME/.cache}}/dots"
+mkdir -p "$cache_dir"
+:>>"$cache_dir/trackfile_c"
+
+track() {
+
+	# we must reset to unstage uncommited files from a previous track execution that wouldn't have been committed
+	$dots reset
+
+	# get the trackfile location
+	trackfile="${DOTS_TRACKFILE:-${XDG_CONFIG_HOME:-$HOME/.config}}/trackfile"
+	[ ! -z $1 ] && trackfile=$1
+
+	# get orphaned files and directories from previous trackfile and delete them from the repo
+	orphaned=$(comm -23 "$cache_dir/trackfile_c" "$trackfile")
+	[ ! -z "$orphaned" ] && $dots rm -r --cached $orphaned
+
+	while IFS= read -r l; do
+		[ ! -z "$l" ] && $dots add "$l"
+	done < "$trackfile"
+	cp -f "$trackfile" "$cache_dir/trackfile_c"
+}
+
+set_remote() {
+	$dots remote add origin "$1" 2> /dev/null || $dots remote set-url origin "$1" 2> /dev/null
+	echo "Set remote to $1"
+}
+
+push() {
+	[ ! -z $1 ] && msg="$1" || msg="update $(date -u +'%D-%T')"
+	$dots commit -m "$msg"
+	$dots push --force origin
+}
+
+case $1 in
+	track|t)
+		shift
+		track $@
+		;;
+	set-remote|u)
+		shift
+		set_remote $@
+		;;
+	push|p)
+		shift
+		push
+		;;
+	--)
+		shift
+		$dots $@
+		;;
+esac
