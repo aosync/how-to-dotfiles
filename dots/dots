@@ -58,7 +58,7 @@ case $1 in
 		;;
 	push|p)
 		shift
-		push
+		push $@
 		;;
 	--)
 		shift
