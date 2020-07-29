@@ -13,11 +13,15 @@ By default, the file would be at `.config/trackfile` but the program handles XDG
 
 The dots repo is created and managed at `.local/share/dots` but it can be overriden with `DOTS_REPO` env var.  
 
-First, set your repo remote url with `dots set-remote <url to remote>`, then you can track your changed files with `dots track`, then push to remote with `dots push`.  
+The first time the git bare repo is created, you must set your repo remote url with `dots set-remote <url to remote>`.  
+
+Then you can track your changed files with `dots track`, then push to remote with `dots push`.  
 
 ## Notes
 
 The program handles deletion of files so no need to `dots rm --cached (...)` anymore.  
 The program stores an old version of the trackfile in order to compare changes and delete what has been removed from the new one.  
+
+The program also handles spaces in file names `:)`  
 
 If you need to access git subcommands, you can do so with `--`, for example `dots -- status`.
