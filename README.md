@@ -46,3 +46,7 @@ var/local/share/applications/
 ```
 
 When I want to commit my dotfiles I can do `dots add $(cat etc/trackfile)`, then `dots commit -m "update"`. If I need to remove a file from my dotfiles (which is not that common), I just unlist the file then delete it from the repo with `dots rm --cached ~/path/to/file`.
+
+## If you are lazier...
+
+I've made a little tool in `dots/` directory to make everything nicely for you.
