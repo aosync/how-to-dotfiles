@@ -42,7 +42,7 @@ set_remote() {
 }
 
 push() {
-	[ ! -z $1 ] && msg="$1" || msg="update $(date -u +'%D-%T')"
+	[ ! -z "$1" ] && msg="$1" || msg="update $(date -u +'%D-%T')"
 	$dots commit -m "$msg"
 	$dots push --force origin HEAD
 }
@@ -58,7 +58,7 @@ case $1 in
 		;;
 	push|p)
 		shift
-		push $@
+		push "$@"
 		;;
 	--)
 		shift
