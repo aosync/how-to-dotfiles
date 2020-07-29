@@ -23,7 +23,7 @@ track() {
 	$dots reset
 
 	# get the trackfile location
-	trackfile="${DOTS_TRACKFILE:-${XDG_CONFIG_HOME:-$HOME/.config}}/trackfile"
+	trackfile="${DOTS_TRACKFILE:-${XDG_CONFIG_HOME:-$HOME/.config}/trackfile}"
 	[ ! -z $1 ] && trackfile=$1
 
 	# get orphaned files and directories from previous trackfile and delete them from the repo
@@ -63,5 +63,8 @@ case $1 in
 	--)
 		shift
 		$dots $@
+		;;
+	"")
+		$dots status
 		;;
 esac
