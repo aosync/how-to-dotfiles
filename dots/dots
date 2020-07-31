@@ -13,7 +13,7 @@ dots_repo="${DOTS_REPO:-${XDG_DATA_HOME:-$HOME/.local/share}/dots}"
 dots="git --git-dir=$dots_repo --work-tree=$HOME"
 
 # initialize cache stuff
-cache_dir="${DOTS_CACHEDIR:-${XDG_CACHE_HOME:-$HOME/.cache}}/dots"
+cache_dir="${DOTS_CACHEDIR:-${XDG_CACHE_HOME:-$HOME/.cache}/dots}"
 mkdir -p "$cache_dir"
 :>>"$cache_dir/trackfile_c"
 
