@@ -4,7 +4,7 @@ Little wrapper to manage dotfiles easily using the git bare repo method.
 
 ## Installation
 
-Copy `dots` to a PATH-ed directory
+Symlink `dots` to a PATH-ed directory.
 
 ## How to use
 

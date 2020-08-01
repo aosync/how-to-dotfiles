@@ -18,7 +18,6 @@ mkdir -p "$cache_dir"
 :>>"$cache_dir/trackfile_c"
 
 track() {
-
 	# we must reset to unstage uncommited files from a previous track execution that wouldn't have been committed
 	$dots reset
 
