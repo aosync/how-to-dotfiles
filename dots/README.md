@@ -19,7 +19,7 @@ Then you can track your changed files with `dots track`, then push to remote wit
 
 ## Notes
 
-The program handles deletion of files so no need to `dots rm --cached (...)` anymore.  
+The program handles the removing of files from the trackfile so no need to `dots rm --cached (...)` anymore.  
 The program stores an old version of the trackfile in order to compare changes and delete what has been removed from the new one.  
 
 The program also handles spaces in file names `:)`  
