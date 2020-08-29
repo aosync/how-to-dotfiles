@@ -32,7 +32,6 @@ track() {
 	while IFS= read -r l; do
 		[ ! -z "$l" ] && $dots add "$l"
 	done < "$trackfile"
-	cp -f "$trackfile" "$cache_dir/trackfile_c"
 }
 
 set_remote() {
@@ -43,6 +42,7 @@ set_remote() {
 push() {
 	[ ! -z "$1" ] && msg="$1" || msg="update $(date -u +'%D-%T')"
 	$dots commit -m "$msg"
+	cp -f "$trackfile" "$cache_dir/trackfile_c"
 	$dots push --force origin HEAD
 }
 
