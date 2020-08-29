@@ -27,7 +27,6 @@ track() {
 
 	# get orphaned files and directories from previous trackfile and delete them from the repo
 	orphaned=$(comm -23 "$cache_dir/trackfile_c" "$trackfile")
-	echo "$orphaned"
 	[ ! -z "$orphaned" ] && $dots rm -r --cached "$orphaned"
 
 	while IFS= read -r l; do
