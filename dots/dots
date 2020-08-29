@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # cd to home because it works easier and shows better output with status
-cd $HOME
+cd "$HOME" || exit
 
 # get the dots repo location
 dots_repo="${DOTS_REPO:-${XDG_DATA_HOME:-$HOME/.local/share}/dots}"
@@ -23,11 +23,12 @@ track() {
 
 	# get the trackfile location
 	trackfile="${DOTS_TRACKFILE:-${XDG_CONFIG_HOME:-$HOME/.config}/trackfile}"
-	[ ! -z $1 ] && trackfile=$1
+	[ ! -z "$1" ] && trackfile="$1"
 
 	# get orphaned files and directories from previous trackfile and delete them from the repo
 	orphaned=$(comm -23 "$cache_dir/trackfile_c" "$trackfile")
-	[ ! -z "$orphaned" ] && $dots rm -r --cached $orphaned
+	echo "$orphaned"
+	[ ! -z "$orphaned" ] && $dots rm -r --cached "$orphaned"
 
 	while IFS= read -r l; do
 		[ ! -z "$l" ] && $dots add "$l"
@@ -49,11 +50,11 @@ push() {
 case $1 in
 	track|t)
 		shift
-		track $@
+		track "$@"
 		;;
 	set-remote|u)
 		shift
-		set_remote $@
+		set_remote "$@"
 		;;
 	push|p)
 		shift
@@ -61,7 +62,7 @@ case $1 in
 		;;
 	--)
 		shift
-		$dots $@
+		$dots "$@"
 		;;
 	"")
 		$dots status
